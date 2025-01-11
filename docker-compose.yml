@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  db:
+    build: ./db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: stc_user
+      POSTGRES_PASSWORD: stc_password
+      POSTGRES_DB: stc_db
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/stc_db
+      SPRING_DATASOURCE_USERNAME: stc_user
+      SPRING_DATASOURCE_PASSWORD: stc_password
